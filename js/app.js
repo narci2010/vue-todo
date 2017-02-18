@@ -221,7 +221,7 @@ var app = new Vue({
 
     computed: {
         percent() {
-            if (this.done === 0) return 5;
+            if (this.done === 0) return 0;
             return Math.round(this.done / (this.open + this.done) * 100);
         }
     },
@@ -235,7 +235,7 @@ var app = new Vue({
             .then(function () {
                 this.iDB.getAll()
                     .then(function (todos) {
-                        this.todos = todos;
+                        this.todos = todos.sort(this.sortTodosByDate);
                         this.updateCount();
                     }.bind(this))
                     .catch(function (error) {
@@ -259,6 +259,7 @@ var app = new Vue({
                 .then(function (index) {
                     e.id = index;
                     this.todos.push(e);
+                    this.todos = this.todos.sort(this.sortTodosByDate);
                     this.updateCount();
                     this.form.reset();
                 }.bind(this))
@@ -275,6 +276,7 @@ var app = new Vue({
                     });
 
                     this.todos.splice(i, 1);
+                    this.todos = this.todos.sort(this.sortTodosByDate);
                     this.updateCount();
                 }.bind(this))
                 .catch(function (error) {
@@ -298,6 +300,7 @@ var app = new Vue({
                     });
 
                     this.todos[i].completed = status;
+                    this.todos = this.todos.sort(this.sortTodosByDate);
                     this.updateCount();
                 }.bind(this))
                 .catch(function (error) {
@@ -311,6 +314,21 @@ var app = new Vue({
             }).length;
 
             this.done = this.todos.length - this.open;
+        },
+
+        sortTodosByDate(a, b) {
+            let dateA = moment(a.date + ' ' + a.time).format('X');
+            let dateB = moment(b.date + ' ' + b.date).format('X');
+
+            if (dateA < dateB) {
+                return -1;
+            }
+
+            if (dateA > dateB) {
+                return 1;
+            }
+
+            return 0;
         }
     }
 });
