@@ -1,11 +1,17 @@
-$mainBlue: #46529D;
-$lightGrey: #e3e3e3;
+$mainBlue: #46549D;
+$lightBlue: #2EBAEE;
+$lightGrey: #fefefe;
+$grey: #8aa9d2;
+$darkGrey: #3d415b;
+$btnBlue: #89cbf0;
 
 html,
 body {
   background: linear-gradient(to bottom, #001123 0%, #071458 100%);
+  color: $darkGrey;
   font-family: 'Source Sans Pro', sans-serif;
   height: 100%;
+  min-height: 100%;
 }
 
 header {
@@ -46,17 +52,73 @@ header {
   }
 }
 
-#events {
-  padding-top: 50px;
+.wrapper {
+  padding-top: 30px;
 }
 
-.card {
+.todo-form-wrapper {
   background-color: $mainBlue;
-  border: none;
-}
+  padding: 20px;
 
-#todo-form {
-  textarea {
-    resize: none;
+  .todo-form-title {
+    font-size: 1.2em;
+    font-weight: 300;
+    color: #fff;
+    text-align: center;
+  }
+
+  .todo-form-body {
+    padding-top: 30px;
+
+    input,
+    select {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid $lightGrey;
+      border-radius: 0;
+      color: #fff;
+      font-size: 0.9em;
+      padding: 5px 0;
+    }
+
+    option {
+      color: $darkGrey;
+      padding: 0;
+    }
+
+    .btn-blue {
+      background-color: $lightBlue;
+      box-shadow: 0 5px 10px rgba(1,1,1,0.3);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 300;
+      margin-top: 40px;
+      position: relative;
+
+      &:hover {
+        background-color: darken($lightBlue, 10%);
+      }
+
+      &:active {
+        box-shadow: 0 3px 5px rgba(1,1,1,0.3);
+        top: 2px;
+      }
+    }
+
+    *::-webkit-input-placeholder {
+      color: $grey;
+    }
+    *:-moz-placeholder {
+      /* FF 4-18 */
+      color: $grey;
+    }
+    *::-moz-placeholder {
+      /* FF 19+ */
+      color: $grey;
+    }
+    *:-ms-input-placeholder {
+      /* IE 10+ */
+      color: $grey;
+    }
   }
 }

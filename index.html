@@ -27,39 +27,46 @@
                                 </span>
                                 <span class="col-6">
                                     <div class="stats">
-                                        {{ closed }}<br>
+                                        {{ done }}<br>
                                         <span class="subline">done</span>
                                     </div>
                                 </span>
                             </span>
                         </div>
                         <div>
-                            <span class="subline">{{ percent }}% done</span>
+                            <span class="subline">{{ percent }} % done</span>
                         </div>
                     </div>
                 </div>
             </header>
-            <div class="container-fluid">
+            <div class="container-fluid wrapper">
                 <div class="row">
-                    <div class="col col-md-4">
-                        <div class="todo-new">
-                            <h3 class="card-title">Add New Todo</h3>
-                            <form id="todo-form">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Title" v-model="form.name">
-                                </div>
-                                <div class="form-group">
-                                    <textarea class="form-control" rows="3" v-model="form.description" placeholder="What do you have to do?"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <input type="date" class="form-control" placeholder="Event Date" v-model="form.date">
-                                </div>
-                                <a href="#" class="btn btn-primary" @click.prevent="addEvent">Save</a>
-                            </form>
+                    <div class="col col-md-2">
+                        <div class="todo-form-wrapper">
+                            <div class="todo-form-title">Add New Todo</div>
+                            <div class="todo-form-body">
+                                <form>
+                                    <div class="form-group">
+                                        <select class="form-control" v-model="form.type" required>
+                                            <option v-for="option in options" :value="option.value" selected>{{ option.text }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" v-model="form.description" placeholder="What do you have to do?" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="date" class="form-control" placeholder="Event Date" v-model="form.date" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="time" class="form-control" placeholder="Event Time" v-model="form.time" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-block btn-blue" @click.prevent="addEvent">Save</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="col col-md-4">
+                    <div class="col col-md-5">
                         <div class="list-group">
                             <div class="list-group-item" v-for="(event, index) in events">
                                 <h4 class="list-group-item-heading">
@@ -76,7 +83,7 @@
                         </div>
                     </div>
 
-                    <div class="col col-md-4">
+                    <div class="col col-md-5">
                     </div>
                 </div>
             </div>

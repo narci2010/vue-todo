@@ -9,7 +9,13 @@ class Form {
 
     reset() {
         for (let field in this.originalData) {
-            this[field] = '';
+            if (field == 'date') {
+                this[field] = moment().format('YYYY-MM-DD');
+            } else if (field == 'time') {
+                this[field] = moment().format('HH:mm');
+            } else {
+                this[field] = this.originalData[field];
+            }
         }
     }
 
@@ -129,6 +135,32 @@ class iDB {
             }
         }.bind(this));
     }
+
+    update(index, status) {
+        return new Promise(function (resolve, reject) {
+            let objectStore = this.db.transaction([this.db_store_name], 'readwrite').objectStore(this.db_store_name);
+            let request = objectStore.get(index);
+
+            request.onsuccess = function (event) {
+                let data = event.target.result;
+
+                data.completed = status;
+
+                let reqUpdate = objectStore.put(data);
+                reqUpdate.onsuccess = function (event) {
+                    resolve();
+                }
+
+                reqUpdate.onerror = function (event) {
+                    reject(Error('Update error.'));
+                }
+            }
+
+            request.onerror = function (event) {
+                reject(Error('Update Request error.'));
+            }
+        }.bind(this));
+    }
 }
 
 var app = new Vue({
@@ -137,19 +169,32 @@ var app = new Vue({
     data: {
         form: new Form({
             id: '',
-            name: '',
+            type: 'work',
             description: '',
-            date: ''
+            completed: false,
+            date: moment().format('YYYY-MM-DD'),
+            time: moment().format('HH:mm')
         }),
+
+        options: [
+            { value: 'work', text: 'Work' },
+            { value: 'private', text: 'Private' }
+        ],
 
         iDB: new iDB('EventDB', 5, 'events'),
 
         events: [],
 
         open: 0,
-        closed: 0,
-        percent: 0,
+        done: 0,
         date: moment().format('dddd, MMM Do YYYY')
+    },
+
+    computed: {
+        percent() {
+            if (this.done === 0) return 0;
+            return Math.floor(this.done / (this.open + this.done)) * 100;
+        }
     },
 
     created() {
@@ -173,8 +218,13 @@ var app = new Vue({
     },
 
     methods: {
-        addEvent() {
+        addTodo() {
             let e = this.form.data();
+
+            if (e.description.length < 5) {
+                return false;
+            }
+
             this.iDB.add(e)
                 .then(function (index) {
                     e.id = index;
@@ -186,7 +236,7 @@ var app = new Vue({
                 });
         },
 
-        deleteEvent(index) {
+        deleteTodo(index) {
             this.iDB.delete(index)
                 .then(function () {
                     let i = this.events.findIndex(function (elem) {
@@ -194,6 +244,28 @@ var app = new Vue({
                     });
 
                     this.events.splice(i, 1);
+                }.bind(this))
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+
+        setTodoDone(index) {
+            this.updateTodo(index, true);
+        },
+
+        setTodoOpen(index) {
+            this.updateTodo(index, false);
+        },
+
+        updateTodo(index, status) {
+            this.iDB.update(index, status)
+                .then(function () {
+                    let i = this.events.findIndex(function (elem) {
+                        return elem.id === index;
+                    });
+
+                    this.events[i].completed = status;
                 }.bind(this))
                 .catch(function (error) {
                     console.log(error);
