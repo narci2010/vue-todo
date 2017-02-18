@@ -1,0 +1,44 @@
+html,
+body {
+  background: linear-gradient(to bottom, #001123 0%, #071458 100%);
+  font-family: 'Source Sans Pro', sans-serif;
+  height: 100%; }
+
+header > .row {
+  background: #46529D url("../img/bg.jpg") no-repeat center;
+  background-size: cover;
+  color: #fff;
+  height: 220px; }
+
+header .subline {
+  color: #e3e3e3;
+  font-size: 0.8rem; }
+
+header h1 {
+  font-size: 2em;
+  font-weight: 300;
+  margin-bottom: 0; }
+
+header .todo-overview {
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 100%;
+  padding: 10px 30px 10px 10px; }
+  header .todo-overview > .row {
+    height: 100%; }
+  header .todo-overview .stats {
+    line-height: 0.5em;
+    font-size: 2em;
+    text-align: right; }
+    header .todo-overview .stats strong {
+      font-size: 1rem;
+      text-transform: uppercase; }
+
+#events {
+  padding-top: 50px; }
+
+.card {
+  background-color: #46529D;
+  border: none; }
+
+#todo-form textarea {
+  resize: none; }

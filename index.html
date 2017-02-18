@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Vue</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <div id="todo-app">
+            <header class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-6 col-md-8 col-lg-10">
+                        <h1>Your Todos</h1>
+                        <span class="subline">{{ date }}</span>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2 todo-overview">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <div class="stats">
+                                    {{ open }}<br>
+                                    <span class="subline">open</span>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="stats">
+                                    {{ closed }}<br>
+                                    <span class="subline">closed</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col col-md-4">
+                        <div class="todo-new">
+                            <h3 class="card-title">Add New Todo</h3>
+                            <form id="todo-form">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Title" v-model="form.name">
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control" rows="3" v-model="form.description" placeholder="What do you have to do?"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <input type="date" class="form-control" placeholder="Event Date" v-model="form.date">
+                                </div>
+                                <a href="#" class="btn btn-primary" @click.prevent="addEvent">Save</a>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col col-md-4">
+                        <div class="list-group">
+                            <div class="list-group-item" v-for="(event, index) in events">
+                                <h4 class="list-group-item-heading">
+                                    <i class="glyphicon glyphicon-bullhorn"></i> {{ event.name }}
+                                </h4>
+                                <h5>
+                                    <i class="glyphicon glyphicon-calendar" v-if="event.date"></i> {{ event.date }}
+                                </h5>
+                                <p class="list-group-item-text" v-if="event.description">
+                                    {{ event.description }}
+                                </p>
+                                <button class="btn btn-xs btn-danger" @click="deleteEvent(event.id)">Delete Event</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col col-md-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- JS -->
+        <script src="node_modules/vue/dist/vue.js"></script>
+        <script src="node_modules/axios/dist/axios.js"></script>
+        <script src="node_modules/moment/min/moment.min.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>

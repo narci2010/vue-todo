@@ -1,0 +1,65 @@
+$mainBlue: #46529D;
+$lightGrey: #e3e3e3;
+
+html,
+body {
+  background: linear-gradient(to bottom, #001123 0%, #071458 100%);
+  font-family: 'Source Sans Pro', sans-serif;
+  height: 100%;
+}
+
+header {
+  > .row {
+    background: $mainBlue url("../img/bg.jpg") no-repeat center;
+    background-size: cover;
+    color: #fff;
+    height: 220px;
+  }
+
+  .subline {
+    color: $lightGrey;
+    font-size: 0.8rem;
+  }
+
+  h1 {
+    font-size: 2em;
+    font-weight: 300;
+    margin-bottom: 0;
+  }
+
+  .todo-overview {
+    background-color: rgba(0,0,0,0.6);
+    height: 100%;
+    padding: 10px 30px 10px 10px;
+
+    > .row {
+      height: 100%;
+    }
+
+    .stats {
+      line-height: 0.5em;
+      font-size: 2em;
+      text-align: right;
+
+      strong {
+        font-size: 1rem;
+        text-transform: uppercase;
+      }
+    }
+  }
+}
+
+#events {
+  padding-top: 50px;
+}
+
+.card {
+  background-color: $mainBlue;
+  border: none;
+}
+
+#todo-form {
+  textarea {
+    resize: none;
+  }
+}
