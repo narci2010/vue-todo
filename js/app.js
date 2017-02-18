@@ -148,6 +148,7 @@ var app = new Vue({
 
         open: 0,
         closed: 0,
+        percent: 0,
         date: moment().format('dddd, MMM Do YYYY')
     },
 

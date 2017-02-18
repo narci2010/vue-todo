@@ -14,24 +14,27 @@
         <div id="todo-app">
             <header class="container-fluid">
                 <div class="row align-items-center">
-                    <div class="col-6 col-md-8 col-lg-10">
+                    <div class="col">
                         <h1>Your Todos</h1>
                         <span class="subline">{{ date }}</span>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-2 todo-overview">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <div class="stats">
-                                    {{ open }}<br>
-                                    <span class="subline">open</span>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="stats">
-                                    {{ closed }}<br>
-                                    <span class="subline">closed</span>
-                                </div>
-                            </div>
+                        <div class="stats-wrapper">
+                            <span class="row">
+                                <span class="col-6">
+                                    <div class="stats">
+                                        {{ open }}<br>
+                                        <span class="subline">open</span>
+                                    </div>
+                                </span>
+                                <span class="col-6">
+                                    <div class="stats">
+                                        {{ closed }}<br>
+                                        <span class="subline">done</span>
+                                    </div>
+                                </span>
+                            </span>
+                        </div>
+                        <div>
+                            <span class="subline">{{ percent }}% done</span>
                         </div>
                     </div>
                 </div>
