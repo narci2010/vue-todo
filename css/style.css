@@ -6,15 +6,15 @@ body {
   height: 100%;
   min-height: 100%; }
 
+.subline {
+  color: #fefefe;
+  font-size: 0.8rem; }
+
 header > .row {
   background: #46549D url("../img/bg.jpg") no-repeat center;
   background-size: cover;
   color: #fff;
   height: 220px; }
-
-header .subline {
-  color: #fefefe;
-  font-size: 0.8rem; }
 
 header h1 {
   font-size: 2em;
@@ -81,3 +81,24 @@ header .stats-wrapper {
     .todo-form-wrapper .todo-form-body *:-ms-input-placeholder {
       /* IE 10+ */
       color: #8aa9d2; }
+
+.todo-list {
+  border-radius: 0; }
+  .todo-list .todo-item {
+    background-color: #fff;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 10px;
+    padding: 0.75rem 1.25rem; }
+    .todo-list .todo-item:last-child {
+      border-bottom: 0; }
+    .todo-list .todo-item p {
+      font-size: 1.4em; }
+    .todo-list .todo-item .subline {
+      color: #3d415b; }
+    .todo-list .todo-item .btn-todo-done {
+      color: #46549D;
+      cursor: pointer;
+      font-size: 2em; }
+      .todo-list .todo-item .btn-todo-done:hover {
+        color: #3d415b; }

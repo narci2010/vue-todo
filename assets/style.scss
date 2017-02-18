@@ -14,17 +14,17 @@ body {
   min-height: 100%;
 }
 
+.subline {
+  color: $lightGrey;
+  font-size: 0.8rem;
+}
+
 header {
   > .row {
     background: $mainBlue url("../img/bg.jpg") no-repeat center;
     background-size: cover;
     color: #fff;
     height: 220px;
-  }
-
-  .subline {
-    color: $lightGrey;
-    font-size: 0.8rem;
   }
 
   h1 {
@@ -122,3 +122,38 @@ header {
     }
   }
 }
+
+.todo-list {
+  border-radius: 0;
+
+  .todo-item {
+    background-color: #fff;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 10px;
+    padding: 0.75rem 1.25rem;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    p {
+      font-size: 1.4em;
+    }
+
+    .subline {
+      color: $darkGrey;
+    }
+
+    .btn-todo-done {
+      color: $mainBlue;
+      cursor: pointer;
+      font-size: 2em;
+
+      &:hover {
+        color: $darkGrey;
+      }
+    }
+  }
+}
+

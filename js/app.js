@@ -163,6 +163,35 @@ class iDB {
     }
 }
 
+Vue.component('todo-item', {
+    template: `
+        <div class="todo-item">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-6">
+                    <p>
+                        {{ todo.description }}
+                    </p>
+                    <div class="subline">
+                        <strong>{{ todo.type | uppercase }}</strong>  &bull;  {{ todo.date }} {{ todo.time }}
+                    </div>
+                </div>
+                <div class="col-6 text-right">
+                    <i title="Mark as done" class="fa fa-angle-right btn-todo-done" v-if="!todo.completed" @click="$emit('done', todo.id)"></i>
+                    <i title="Delete todo" class="fa fa-angle-right btn-todo-done" v-if="todo.completed" @click="$emit('delete', todo.id)"></i>
+                </div>
+            </div>
+        </div>
+    `,
+
+    props: ['todo'],
+
+    filters: {
+        uppercase(value) {
+            return value.toUpperCase();
+        }
+    },
+});
+
 var app = new Vue({
     el: '#todo-app',
 
@@ -183,7 +212,7 @@ var app = new Vue({
 
         iDB: new iDB('EventDB', 5, 'events'),
 
-        events: [],
+        todos: [],
 
         open: 0,
         done: 0,
@@ -192,8 +221,8 @@ var app = new Vue({
 
     computed: {
         percent() {
-            if (this.done === 0) return 0;
-            return Math.floor(this.done / (this.open + this.done)) * 100;
+            if (this.done === 0) return 5;
+            return Math.round(this.done / (this.open + this.done) * 100);
         }
     },
 
@@ -205,8 +234,9 @@ var app = new Vue({
         this.iDB.init()
             .then(function () {
                 this.iDB.getAll()
-                    .then(function (events) {
-                        this.events = events;
+                    .then(function (todos) {
+                        this.todos = todos;
+                        this.updateCount();
                     }.bind(this))
                     .catch(function (error) {
                         console.log(error);
@@ -228,7 +258,8 @@ var app = new Vue({
             this.iDB.add(e)
                 .then(function (index) {
                     e.id = index;
-                    this.events.push(e);
+                    this.todos.push(e);
+                    this.updateCount();
                     this.form.reset();
                 }.bind(this))
                 .catch(function (error) {
@@ -239,11 +270,12 @@ var app = new Vue({
         deleteTodo(index) {
             this.iDB.delete(index)
                 .then(function () {
-                    let i = this.events.findIndex(function (elem) {
+                    let i = this.todos.findIndex(function (elem) {
                         return elem.id === index;
                     });
 
-                    this.events.splice(i, 1);
+                    this.todos.splice(i, 1);
+                    this.updateCount();
                 }.bind(this))
                 .catch(function (error) {
                     console.log(error);
@@ -261,15 +293,24 @@ var app = new Vue({
         updateTodo(index, status) {
             this.iDB.update(index, status)
                 .then(function () {
-                    let i = this.events.findIndex(function (elem) {
+                    let i = this.todos.findIndex(function (elem) {
                         return elem.id === index;
                     });
 
-                    this.events[i].completed = status;
+                    this.todos[i].completed = status;
+                    this.updateCount();
                 }.bind(this))
                 .catch(function (error) {
                     console.log(error);
                 });
+        },
+
+        updateCount() {
+            this.open = this.todos.filter(function (todo) {
+                return todo.completed === false;
+            }).length;
+
+            this.done = this.todos.length - this.open;
         }
     }
 });
