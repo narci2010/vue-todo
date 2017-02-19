@@ -9,13 +9,7 @@ class Form {
 
     reset() {
         for (let field in this.originalData) {
-            if (field == 'date') {
-                this[field] = moment().format('YYYY-MM-DD');
-            } else if (field == 'time') {
-                this[field] = moment().format('HH:mm');
-            } else {
-                this[field] = this.originalData[field];
-            }
+            this[field] = this.originalData[field];
         }
     }
 
@@ -128,7 +122,6 @@ class iDB {
 
             request.onsuccess = function (event) {
                 console.log('Data deleted.');
-                console.log(event.target.result);
                 resolve();
             }
 
@@ -169,15 +162,15 @@ Vue.component('todo-item', {
     template: `
         <div class="todo-item">
             <div class="row align-items-center justify-content-between">
-                <div class="col-6">
+                <div class="col-8">
                     <p>
                         {{ todo.description }}
                     </p>
                     <div class="subline">
-                        <strong>{{ todo.type | uppercase }}</strong>  &bull;  {{ until }}
+                        <strong>{{ todo.type | uppercase }}</strong>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;{{ until }}
                     </div>
                 </div>
-                <div class="col-6 text-right">
+                <div class="col-4 text-right">
                     <i title="Mark as done" class="fa fa-angle-right btn-todo-done" v-if="!todo.completed" @click="$emit('done', todo.id)"></i>
                     <i title="Delete todo" class="fa fa-angle-right btn-todo-done" v-if="todo.completed" @click="$emit('delete', todo.id)"></i>
                 </div>
@@ -189,7 +182,7 @@ Vue.component('todo-item', {
 
     data() {
         return {
-            until: moment(this.todo.date + ' ' + this.todo.time).toNow()
+            until: moment(this.todo.date + ' ' + this.todo.time).fromNow()
         }
     },
 
@@ -209,9 +202,11 @@ var app = new Vue({
             type: 'work',
             description: '',
             completed: false,
-            date: moment().format('YYYY-MM-DD'),
+            date: moment().format('DD.MM.YYYY'),
             time: moment().format('HH:mm')
         }),
+
+        test: '',
 
         options: [
             { value: 'work', text: 'Work' },
@@ -231,6 +226,15 @@ var app = new Vue({
         percent() {
             if (this.done === 0) return 0;
             return Math.round(this.done / (this.open + this.done) * 100);
+        },
+
+        status() {
+            if (this.done === 0) return "0, 69";
+
+            let circleDone = Math.round(this.done / (this.open + this.done) * 69);
+            let circleOpen = 69 - circleDone;
+
+            return circleDone + ', ' + circleOpen;
         }
     },
 
@@ -262,6 +266,8 @@ var app = new Vue({
             if (e.description.length < 5) {
                 return false;
             }
+
+            e.date = moment(e.date, 'DD.MM.YYYY').format('YYYY-MM-DD');
 
             this.iDB.add(e)
                 .then(function (index) {
@@ -329,14 +335,36 @@ var app = new Vue({
             let dateB = moment(b.date + ' ' + b.time).format('X');
 
             if (dateA < dateB) {
-                return 1;
+                return -1;
             }
 
             if (dateA > dateB) {
-                return -1;
+                return 1;
             }
 
             return 0;
         }
     }
+});
+
+document.addEventListener('DOMContentLoaded', function (event) {
+    let date = jQuery('#date');
+    let time = jQuery('#time');
+
+    date.datetimepicker({
+        format: 'DD.MM.YYYY',
+        defaultDate: moment()
+    });
+
+    date.on('dp.change', function (event) {
+        app.form.date = event.date.format('DD.MM.YYYY');
+    });
+
+    time.datetimepicker({
+        format: 'HH:mm'
+    });
+
+    time.on('dp.change', function (event) {
+        app.form.time = event.date.format('HH:mm');
+    });
 });
