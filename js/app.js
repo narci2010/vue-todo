@@ -50,7 +50,9 @@ class iDB {
                 let db = event.target.result;
                 let osEvents = db.createObjectStore(this.db_store_name, { autoIncrement: true });
 
-                osEvents.createIndex('name', 'name', { unique: false });
+                osEvents.createIndex('type', 'type', { unique: false });
+                osEvents.createIndex('description', 'description', { unique: false });
+                osEvents.createIndex('time', 'date', { unique: false });
 
                 osEvents.transaction.oncomplete = function (event) {
                     console.log('DB successfully initialized.');
@@ -146,7 +148,7 @@ class iDB {
 
                 data.completed = status;
 
-                let reqUpdate = objectStore.put(data);
+                let reqUpdate = objectStore.put(data, index);
                 reqUpdate.onsuccess = function (event) {
                     resolve();
                 }
@@ -172,7 +174,7 @@ Vue.component('todo-item', {
                         {{ todo.description }}
                     </p>
                     <div class="subline">
-                        <strong>{{ todo.type | uppercase }}</strong>  &bull;  {{ todo.date }} {{ todo.time }}
+                        <strong>{{ todo.type | uppercase }}</strong>  &bull;  {{ until }}
                     </div>
                 </div>
                 <div class="col-6 text-right">
@@ -184,6 +186,12 @@ Vue.component('todo-item', {
     `,
 
     props: ['todo'],
+
+    data() {
+        return {
+            until: moment(this.todo.date + ' ' + this.todo.time).toNow()
+        }
+    },
 
     filters: {
         uppercase(value) {
@@ -210,7 +218,7 @@ var app = new Vue({
             { value: 'private', text: 'Private' }
         ],
 
-        iDB: new iDB('EventDB', 5, 'events'),
+        iDB: new iDB('TodoDB', 6, 'todos'),
 
         todos: [],
 
@@ -318,14 +326,14 @@ var app = new Vue({
 
         sortTodosByDate(a, b) {
             let dateA = moment(a.date + ' ' + a.time).format('X');
-            let dateB = moment(b.date + ' ' + b.date).format('X');
+            let dateB = moment(b.date + ' ' + b.time).format('X');
 
             if (dateA < dateB) {
-                return -1;
+                return 1;
             }
 
             if (dateA > dateB) {
-                return 1;
+                return -1;
             }
 
             return 0;
