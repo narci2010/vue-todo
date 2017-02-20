@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Your Todos</title>
 
-        <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+        <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
         <meta name="robots" content="noindex,nofollow">
 
         <!-- CSS -->
@@ -59,17 +59,23 @@
                                 <form>
                                     <div class="form-group">
                                         <select class="form-control" v-model="form.type" required>
-                                            <option v-for="option in options" :value="option.value" selected>{{ option.text }}</option>
+                                            <option v-for="option in options" :value="option.value">{{ option.text }}</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <input class="form-control" v-model="form.description" placeholder="What do you have to do?" required>
                                     </div>
-                                    <div class="form-group">
-                                        <input id="date" type="text" class="form-control" placeholder="Todo Date" v-model="form.date" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <input id="time" type="text" class="form-control" placeholder="Todo Time" v-model="form.time" required>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <input id="date" type="text" class="form-control" placeholder="Todo Date" v-model="form.date" required>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <input id="time" type="text" class="form-control" placeholder="Todo Time" v-model="form.time" required>
+                                            </div>
+                                        </div>
                                     </div>
                                     <button type="submit" class="btn btn-block btn-blue" @click.prevent="addTodo">Save</button>
                                 </form>
@@ -110,7 +116,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.45/js/bootstrap-datetimepicker.min.js"></script>
-        <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+        <script src="https://unpkg.com/vue/dist/vue.js"></script>
         <script src="js/app.js"></script>
     </body>
 </html>

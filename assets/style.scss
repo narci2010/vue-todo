@@ -5,12 +5,18 @@ $grey: #8aa9d2;
 $darkGrey: #3d415b;
 $btnBlue: #89cbf0;
 
+$green: #00b33c;
+$red: #ff4000;
+
+$bgTop: #071458;
+$bgBottom: #001123;
+
 html {
   min-height: 100%;
 }
 
 body {
-  background: linear-gradient(to bottom, #071458 0%, #001123 100%);
+  background: linear-gradient(to bottom, $bgTop 0%, $bgBottom 100%);
   color: $darkGrey;
   font-family: 'Source Sans Pro', sans-serif;
   margin: 0;
@@ -94,27 +100,27 @@ header {
 
     input,
     select {
-      background: transparent;
+      background: $bgTop;
       border: none;
-      border-bottom: 1px solid $lightGrey;
-      border-radius: 0;
+      border-radius: 3px;
       color: #fff;
       font-size: 0.9em;
-      padding: 5px 0;
+      padding: 10px;
     }
 
     option {
-      color: $darkGrey;
+      color: $grey;
       padding: 0;
     }
 
     .btn-blue {
       background-color: $lightBlue;
       box-shadow: 0 5px 10px rgba(1,1,1,0.3);
+      border-radius: 3px;
       color: #fff;
       cursor: pointer;
       font-weight: 300;
-      margin-top: 40px;
+      margin-top: 20px;
       position: relative;
 
       &:hover {
@@ -152,12 +158,27 @@ header {
   .todo-item {
     background-color: #fff;
     border: 0;
-    border-radius: 0;
     margin-bottom: 10px;
     padding: 0.75rem 1.25rem;
+    transition: box-shadow 0.3s ease;
 
     &:last-child {
       border-bottom: 0;
+    }
+
+    &.green {
+      box-shadow: 5px 0 0 0 $green inset;
+      &:hover {
+        box-shadow: 7px 0 0 0 $green inset;
+      }
+    }
+
+    &.red {
+      box-shadow: 5px 0 0 0 $red inset;
+
+      &:hover {
+        box-shadow: 7px 0 0 0 $red inset;
+      }
     }
 
     p {

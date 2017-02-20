@@ -8,9 +8,11 @@ class Form {
     }
 
     reset() {
-        for (let field in this.originalData) {
-            this[field] = this.originalData[field];
-        }
+        this.type = 'work';
+        this.description = '';
+        this.completed = false,
+        this.date = moment().format('DD.MM.YYYY'),
+        this.time = moment().format('HH:mm')
     }
 
     data() {
@@ -160,7 +162,7 @@ class iDB {
 
 Vue.component('todo-item', {
     template: `
-        <div class="todo-item">
+        <div class="todo-item" v-bind:class="todo.completed ? 'green' : 'red'">
             <div class="row align-items-center justify-content-between">
                 <div class="col-8">
                     <p>

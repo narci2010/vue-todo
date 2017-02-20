@@ -62,23 +62,23 @@ header .stats-wrapper {
     padding-top: 30px; }
     .todo-form-wrapper .todo-form-body input,
     .todo-form-wrapper .todo-form-body select {
-      background: transparent;
+      background: #071458;
       border: none;
-      border-bottom: 1px solid #fefefe;
-      border-radius: 0;
+      border-radius: 3px;
       color: #fff;
       font-size: 0.9em;
-      padding: 5px 0; }
+      padding: 10px; }
     .todo-form-wrapper .todo-form-body option {
-      color: #3d415b;
+      color: #8aa9d2;
       padding: 0; }
     .todo-form-wrapper .todo-form-body .btn-blue {
       background-color: #2EBAEE;
       box-shadow: 0 5px 10px rgba(1, 1, 1, 0.3);
+      border-radius: 3px;
       color: #fff;
       cursor: pointer;
       font-weight: 300;
-      margin-top: 40px;
+      margin-top: 20px;
       position: relative; }
       .todo-form-wrapper .todo-form-body .btn-blue:hover {
         background-color: #12a2d7; }
@@ -103,11 +103,19 @@ header .stats-wrapper {
   .todo-list .todo-item {
     background-color: #fff;
     border: 0;
-    border-radius: 0;
     margin-bottom: 10px;
-    padding: 0.75rem 1.25rem; }
+    padding: 0.75rem 1.25rem;
+    transition: box-shadow 0.3s ease; }
     .todo-list .todo-item:last-child {
       border-bottom: 0; }
+    .todo-list .todo-item.green {
+      box-shadow: 5px 0 0 0 #00b33c inset; }
+      .todo-list .todo-item.green:hover {
+        box-shadow: 7px 0 0 0 #00b33c inset; }
+    .todo-list .todo-item.red {
+      box-shadow: 5px 0 0 0 #ff4000 inset; }
+      .todo-list .todo-item.red:hover {
+        box-shadow: 7px 0 0 0 #ff4000 inset; }
     .todo-list .todo-item p {
       font-size: 1.4em; }
     .todo-list .todo-item .subline {
