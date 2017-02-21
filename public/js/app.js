@@ -182,9 +182,9 @@ Vue.component('todo-item', {
 
     props: ['todo'],
 
-    data() {
-        return {
-            until: moment(this.todo.date + ' ' + this.todo.time).fromNow()
+    computed: {
+        until() {
+            return moment(this.todo.date + ' ' + this.todo.time).fromNow();
         }
     },
 
@@ -355,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
 
     date.datetimepicker({
         format: 'DD.MM.YYYY',
-        defaultDate: moment()
+        defaultDate: moment(),
     });
 
     date.on('dp.change', function (event) {

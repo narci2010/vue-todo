@@ -193,9 +193,12 @@ header {
       color: $mainBlue;
       cursor: pointer;
       font-size: 2em;
+      position: relative;
+      transition: transform 0.2s linear;
 
       &:hover {
         color: $darkGrey;
+        transform: translateX(3px);
       }
     }
   }

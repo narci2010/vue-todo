@@ -123,6 +123,9 @@ header .stats-wrapper {
     .todo-list .todo-item .btn-todo-done {
       color: #46549D;
       cursor: pointer;
-      font-size: 2em; }
+      font-size: 2em;
+      position: relative;
+      transition: transform 0.2s linear; }
       .todo-list .todo-item .btn-todo-done:hover {
-        color: #3d415b; }
+        color: #3d415b;
+        transform: translateX(3px); }
